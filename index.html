@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>브릿지 커피 메뉴판</title>
+
+  <!--
+  ╔══════════════════════════════════════════════════════════════╗
+  ║  ★★★ 여기가 "내용을 고치는 곳"이에요 (메뉴·가격·가게 정보) ★★★  ║
+  ╚══════════════════════════════════════════════════════════════╝
+  메뉴, 가격, 가게 정보는 전부 아래 <script> 안에 모여 있어요.
+  이 파일에서 글자나 숫자를 고치고 싶을 때는 이 아래 칸만 보면 돼요.
+  이 칸보다 아래쪽 코드는 건드리지 않아도 됩니다.
+
+  ┌───────────── 고치기 전에 꼭 알아두세요 ─────────────┐
+  │ 1. 따옴표 " " 는 지우지 마세요. 글자는 따옴표 안에 써요.   │
+  │ 2. 줄 끝의 쉼표(,)도 지우지 마세요. 쉼표가 빠지면          │
+  │    메뉴판이 통째로 안 보여요.                              │
+  │ 3. 고치기 전에 이 파일을 복사해서 백업해 두면 안심이에요.    │
+  │    (index.html 복사 → 이름을 index_백업.html 로)           │
+  │ 4. 고친 뒤에는 브라우저에서 새로고침(F5)을 눌러 확인하세요.  │
+  └──────────────────────────────────────────────────────────┘
+  -->
+  <script>
+    /* ================================================================
+       ① 가게 정보 고치기
+       ================================================================
+       따옴표 안의 글자만 바꾸세요.
+       - 영업시간: 줄을 바꾸고 싶으면 두 줄로 나눠 쓰는 대신
+         " / " 로 구분해서 한 줄로 쓰는 걸 추천해요.
+         예) "평일 08:00 ~ 20:00 / 주말 10:00 ~ 18:00"
+       - 전화번호(화면에 보이는 글자): 하이픈(-)을 넣어도 돼요.
+       - 전화걸기번호: 하이픈(-)이나 띄어쓰기 없이 숫자만!
+         이 번호로 손님 휴대폰에서 전화가 걸려요. 꼭 맞게 고쳐주세요.
+    */
+    var 가게정보 = {
+      이름: "브릿지 커피",
+      한줄소개: "직접 로스팅하는 스페셜티 커피, 조용한 1인 좌석이 많은 곳",
+      영업시간: "11:00 ~ 17:00",          /* ← 여기를 고치세요 */
+      전화번호: "000-0000-0000",               /* ← 화면에 보이는 번호 */
+      전화걸기번호: "0000000000"               /* ← 숫자만! 실제 걸리는 번호 */
+    };
+
+    /* ================================================================
+       ② 메뉴 목록 고치기 (가장 중요한 부분!)
+       ================================================================
+       메뉴판은 "분류" 여러 개로 이루어져 있고,
+       각 분류 안에 "메뉴"가 여러 개 들어 있어요.
+
+         분류 (예: 커피)
+           └ 메뉴 (예: 아메리카노 / 4,500원 / 설명)
+           └ 메뉴 (예: 카페라떼 / 5,000원 / 설명)
+
+       ─── 메뉴 한 개는 이렇게 생겼어요 (한 줄이에요) ───
+         { 이름: "아메리카노", 가격: 4500, 설명: "산미가 적은 고소한 원두" },
+
+       ● 가격 고치기
+         가격: 4500  처럼 "숫자만" 쓰세요.
+         ✔ 쓰는 법 → 4500        (콤마, '원' 글자, 따옴표 모두 쓰지 마세요)
+         ✘ 틀린 법 → "4,500원"   (이렇게 쓰면 안 돼요)
+         화면에는 자동으로 "4,500원"으로 예쁘게 바뀌어 보여요.
+
+       ● 메뉴 이름·설명 고치기
+         따옴표 " " 안의 글자만 바꾸세요.
+
+       ● 메뉴 추가하기
+         1) 추가하고 싶은 분류에서, 아무 메뉴 한 줄을 통째로 복사해요.
+            ({ 로 시작해서 }, 로 끝나는 한 줄)
+         2) 바로 아래 줄에 붙여넣어요.
+         3) 이름 / 가격 / 설명만 새 메뉴로 바꿔요.
+         4) 줄 끝의 쉼표(,)가 있는지 꼭 확인하세요!
+
+       ● 메뉴 지우기
+         지우고 싶은 메뉴의 한 줄({ 부터 }, 까지)을 통째로 지우세요.
+         잠시 숨기고 싶다면 줄 맨 앞에 // 를 붙이세요. (나중에 // 만 지우면 다시 보여요)
+         예) // { 이름: "스콘", 가격: 4000, 설명: "..." },
+
+       ● 메뉴 줄 끝에 붙어 있는 "표시 스위치" 설명
+         메뉴 줄 끝을 보면  품절: 0  같은 글자가 붙어 있어요.
+         이것은 "켜고 끄는 스위치"예요.   1 = 켜짐,  0 = 꺼짐
+         숫자 한 글자만 바꾸면 돼요!
+
+       ● 오늘 품절 표시 켜고 끄기  (제일 자주 쓰는 기능이에요)
+         품절된 메뉴 줄에서  품절: 0  을  품절: 1  로 바꾸세요. (0 → 1, 한 글자!)
+           → 카드가 흐려지고 "오늘 품절" 딱지가 떠요.
+         다시 팔 수 있게 되면  품절: 1  을  품절: 0  으로 되돌리세요. (1 → 0)
+         예) { 이름: "스콘", 가격: 4000, 설명: "...", 품절: 1 },   ← 오늘 품절!
+
+       ● 사장님 추천(시그니처) 표시 켜고 끄기
+         추천하고 싶은 메뉴 줄에  시그니처: 1  을 붙이면 "사장님 추천" 배지가 붙고
+         카드가 살짝 더 돋보여요. 지금은 흑임자 라떼와 아인슈페너에 달려 있어요.
+         - 끄려면  시그니처: 1  을 지우거나  시그니처: 0  으로 바꾸세요.
+         - 다른 메뉴에 달려면 그 메뉴 줄 끝(품절: 0 앞)에  시그니처: 1,  을 써넣으세요.
+         예) { 이름: "말차 라떼", 가격: 5800, 설명: "...", 시그니처: 1, 품절: 0 },
+         - 배지 글자("사장님 추천")를 바꾸고 싶으면 맨 아래쪽 코드에서
+           "사장님 추천" 이라고 적힌 곳을 찾아 그 글자만 고치세요.
+
+       ● 신메뉴 표시 달기
+         메뉴 줄에  신메뉴: true  를 붙이면 "신메뉴" 딱지가 붙어요.
+         예) { 이름: "흑임자 라떼", ..., 신메뉴: true, ... },
+         딱지를 떼려면 , 신메뉴: true 부분을 지우세요.
+
+       ● 분류(커피/논커피/디저트) 추가하기
+         아래 분류 덩어리 전체({ 분류이름: ... 부터 ]}, 까지)를 복사해서
+         맨 아래 분류 뒤에 붙여넣고, 분류이름과 메뉴를 바꾸세요.
+       ● 분류 순서 바꾸기
+         덩어리 전체를 잘라서 원하는 위치에 붙여넣으세요.
+    */
+    var 메뉴목록 = [
+
+      /* ────────── 분류 1: 커피 ────────── */
+      {
+        분류이름: "커피",
+        메뉴: [
+          { 이름: "아메리카노",       가격: 4800, 설명: "산미가 적은 고소한 원두", 품절: 0 },
+          { 이름: "카페라떼",         가격: 5000, 설명: "부드러운 우유 거품", 품절: 0 },
+          { 이름: "바닐라 라떼",      가격: 5500, 설명: "바닐라빈을 직접 우려낸 시럽", 품절: 0 },
+          { 이름: "아인슈페너",       가격: 5800, 설명: "단맛을 줄인 수제 크림", 시그니처: 1, 품절: 0 },
+          { 이름: "콜드브루",         가격: 5300, 설명: "12시간 저온 추출, 목넘김이 깔끔함", 품절: 0 },
+          { 이름: "디카페인 아메리카노", 가격: 5000, 설명: "카페인 걱정 없이 편하게", 품절: 0 }
+          /* ↑ 분류의 "맨 마지막" 메뉴 줄 끝에는 쉼표가 없어요.
+               메뉴를 새로 추가할 때는 이 줄 끝에 쉼표(,)를 붙이고
+               그 아래 줄에 새 메뉴를 적으세요. */
+        ]
+      },
+
+      /* ────────── 분류 2: 논커피 ────────── */
+      {
+        분류이름: "논커피",
+        메뉴: [
+          { 이름: "흑임자 라떼", 가격: 5500, 설명: "국산 흑임자를 직접 갈아 넣음", 신메뉴: true, 시그니처: 1, 품절: 0 },
+          { 이름: "말차 라떼",   가격: 5800, 설명: "우지 말차, 쌉쌀한 맛이 진함", 품절: 0 },
+          { 이름: "쑥 라떼",     가격: 5500, 설명: "강화도 쑥, 은은하고 담백함", 품절: 0 },
+          { 이름: "곡물 라떼",   가격: 5300, 설명: "볶은 곡물의 구수한 맛", 품절: 0 },
+          { 이름: "자몽에이드",  가격: 6000, 설명: "생과일 자몽 과육을 그대로", 품절: 0 },
+          { 이름: "레몬생강차",  가격: 5500, 설명: "레몬과 생강을 넣어 따뜻하게 마시는 차", 품절: 0 }   /* 가격·설명은 임시예요. 고쳐주세요 */
+        ]
+      },
+
+      /* ────────── 분류 3: 디저트 ────────── */
+      {
+        분류이름: "디저트",
+        메뉴: [
+          { 이름: "치즈케이크",       가격: 6500, 설명: "굽지 않은 부드러운 식감", 품절: 0 },
+          { 이름: "당근케이크",       가격: 6000, 설명: "견과류를 넉넉히 넣음", 품절: 0 },
+          { 이름: "스콘",             가격: 4000, 설명: "겉은 바삭 속은 촉촉, 잼과 함께", 품절: 0 },
+          { 이름: "바스크 치즈케이크", 가격: 6800, 설명: "겉면을 진하게 태운 풍미", 품절: 0 }
+        ]
+      }
+
+    ];
+  </script>
+  <!-- ═══════════ 여기까지가 고치는 곳이에요. 아래는 건드리지 않아도 돼요 ═══════════ -->
+
+  <style>
+    /* ===== 대표 색상 (바꾸고 싶으면 여기 색 코드만 고치세요) =====
+       금색 계열: --금색(포인트), --진한금색(가격·강조)
+       크림색 계열: --크림(배경 밝은 부분), --진한크림(배경 어두운 부분)
+       글자색: --글자, --연한글자 */
+    :root {
+      --금색: #d4a63a;
+      --진한금색: #8a5f0a;
+      --크림: #fffaf0;
+      --진한크림: #f1e0b8;
+      --글자: #3d2f1c;
+      --연한글자: #6b5a40;
+    }
+
+    /* ===== 기본 모양 (글꼴, 배경) ===== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      /* 고운 돋움이 있으면 그것을, 없으면 맑은 고딕을 써요 */
+      font-family: "고운 돋움", "GowunDodum", "맑은 고딕", "Malgun Gothic", sans-serif;
+      font-size: 16px;
+      color: var(--글자);
+      /* 한국어 글자가 단어 중간에서 끊기지 않게, 띄어쓰기에서만 줄을 바꿔요 */
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      -webkit-tap-highlight-color: transparent;   /* 누를 때 생기는 회색 번쩍임 제거 */
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      /* 배경: 크림색 바탕에 은은한 금빛이 번지는 그라데이션 */
+      background:
+        radial-gradient(circle at 15% 8%, rgba(212, 166, 58, 0.35) 0%, transparent 45%),
+        radial-gradient(circle at 90% 45%, rgba(212, 166, 58, 0.25) 0%, transparent 50%),
+        radial-gradient(circle at 20% 95%, rgba(212, 166, 58, 0.30) 0%, transparent 45%),
+        linear-gradient(160deg, var(--크림) 0%, #f8ecca 55%, var(--진한크림) 100%);
+      background-attachment: fixed;
+    }
+
+    .화면 {
+      width: 100%;
+      max-width: 390px;
+      padding: 36px 20px 56px;
+    }
+
+    /* ===== 유리 느낌 카드 (반투명 + 둥근 모서리 + 부드러운 그림자) ===== */
+    .카드 {
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      border-radius: 26px;
+      box-shadow: 0 10px 30px rgba(138, 95, 10, 0.12);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    /* ===== 맨 위: 가게 이름과 소개 ===== */
+    .맨위 { text-align: center; padding: 36px 24px; }
+    .가게이름 { font-size: 32px; font-weight: bold; letter-spacing: 1px; color: var(--진한금색); }
+    .소개 { margin-top: 14px; font-size: 16px; line-height: 1.7; color: var(--연한글자); }
+
+    /* ===== 카테고리 버튼 (위에 붙어 따라다녀요) ===== */
+    .바로가기 {
+      position: sticky;
+      top: 10px;
+      z-index: 10;
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      padding: 8px;
+      margin-bottom: 24px;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      border-radius: 999px;
+      box-shadow: 0 8px 22px rgba(138, 95, 10, 0.14);
+    }
+    .바로가기 button {
+      flex: 1;
+      min-height: 52px;            /* 손가락으로 누르기 편한 높이 */
+      padding: 8px 4px;
+      font-family: inherit;
+      font-size: 17px;
+      font-weight: bold;
+      color: var(--연한글자);
+      background: transparent;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .바로가기 button:active { background: rgba(212, 166, 58, 0.25); }
+    /* 지금 선택된 버튼: 금색으로 보여줘요 */
+    .바로가기 button.선택됨 {
+      color: #3a2a08;
+      background: linear-gradient(135deg, #e6bf5c, var(--금색));
+      box-shadow: 0 4px 14px rgba(212, 166, 58, 0.55);
+    }
+
+    /* ===== 가운데: 메뉴 ===== */
+    .제목 {
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--진한금색);
+      margin: 12px 6px 16px;
+    }
+
+    .메뉴카드 { padding: 20px 22px; margin-bottom: 16px; }
+    .메뉴줄 { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; }
+    .메뉴이름 { font-size: 19px; font-weight: bold; line-height: 1.4; }
+    /* 가격: 조금 크고 진하게 */
+    .가격 { font-size: 22px; font-weight: bold; white-space: nowrap; color: var(--진한금색); }
+    .설명 { margin-top: 8px; font-size: 15px; line-height: 1.6; color: var(--연한글자); }
+
+    .딱지 {
+      display: inline-block;
+      margin-left: 8px;
+      padding: 3px 10px;
+      font-size: 13px;
+      color: #3a2a08;
+      background: var(--금색);
+      border-radius: 999px;
+      vertical-align: middle;
+    }
+    .딱지.품절딱지 { color: #fff; background: #8d8d8d; }
+    .메뉴카드.품절 { opacity: 0.5; filter: grayscale(0.6); }
+
+    /* 시그니처(사장님 추천) 카드: 금색 테두리와 은은한 금빛으로 살짝 더 돋보이게 */
+    .메뉴카드.시그니처 {
+      background: rgba(255, 248, 225, 0.75);
+      border: 1.5px solid var(--금색);
+      box-shadow: 0 12px 32px rgba(212, 166, 58, 0.35);
+    }
+    .추천배지 {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 4px 12px;
+      font-size: 13px;
+      font-weight: bold;
+      color: #3a2a08;
+      background: linear-gradient(135deg, #e6bf5c, var(--금색));
+      border-radius: 999px;
+    }
+
+    /* ===== 맨 아래: 영업시간과 전화 버튼 ===== */
+    .아래 { text-align: center; padding: 28px 24px; }
+    .시간제목 { font-size: 16px; color: var(--연한글자); }
+    .시간 { margin: 8px 0 22px; font-size: 19px; font-weight: bold; line-height: 1.6; }
+
+    .전화버튼 {
+      display: block;
+      padding: 18px;
+      font-size: 19px;
+      font-weight: bold;
+      color: var(--크림);
+      text-decoration: none;
+      background: linear-gradient(135deg, #a9791a, var(--진한금색));
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(138, 95, 10, 0.4);
+    }
+    .전화버튼:active { transform: scale(0.98); }
+    .전화번호글자 { display: block; margin-top: 4px; font-size: 15px; white-space: nowrap; opacity: 0.9; }
+
+    /* ===== 아주 작은 휴대폰 (가로 폭 360px 미만) ===== */
+    @media (max-width: 359px) {
+      .화면 { padding: 28px 14px 44px; }
+      .카드 { padding: 20px; }
+      .메뉴카드 { padding: 18px; }
+      .가게이름 { font-size: 28px; }
+      .바로가기 button { font-size: 15px; padding: 8px 2px; }
+      .메뉴이름 { font-size: 18px; }
+      .딱지 { margin-left: 8px; }
+    }
+
+    /* ===== 휴대폰을 가로로 눕혔을 때 (화면 높이가 낮을 때) ===== */
+    @media (max-height: 500px) and (orientation: landscape) {
+      .화면 { padding: 20px 20px 36px; }
+      .맨위 { padding: 22px 24px; }
+      /* 화면이 낮아서 따라다니는 버튼이 화면을 너무 가려요 → 가로 모드에서는 따라다니지 않게 */
+      .바로가기 { position: static; }
+    }
+  </style>
+</head>
+<body>
+  <div class="화면">
+
+    <!-- 맨 위: 가게 이름과 한 줄 소개 (내용은 위쪽 '가게정보'에서 가져와요) -->
+    <header class="카드 맨위">
+      <h1 class="가게이름" id="가게이름"></h1>
+      <p class="소개" id="한줄소개"></p>
+    </header>
+
+    <!-- 분류 바로가기 버튼 (자동으로 만들어져요) -->
+    <nav class="바로가기" id="바로가기"></nav>
+
+    <!-- 가운데: 메뉴 목록 (위쪽 '메뉴목록'을 보고 자동으로 만들어져요) -->
+    <main id="메뉴영역"></main>
+
+    <!-- 맨 아래: 영업시간과 전화 걸기 -->
+    <footer class="카드 아래">
+      <p class="시간제목">영업시간</p>
+      <p class="시간" id="영업시간"></p>
+      <a class="전화버튼" id="전화버튼" href="#">📞 전화 걸기</a>
+    </footer>
+
+  </div>
+
+  <script>
+    /* ===== 메뉴판 그리기 (손대지 않아도 돼요) =====
+       위쪽 '가게정보'와 '메뉴목록'을 읽어서 화면을 자동으로 만들어요. */
+
+    // 숫자 4500 → "4,500원" 으로 바꿔주는 도구
+    function 가격글자(숫자) {
+      return Number(숫자).toLocaleString("ko-KR") + "원";
+    }
+
+    // 태그를 쉽게 만드는 도구 (글자는 안전하게 넣어요)
+    function 만들기(태그, 클래스, 글자) {
+      var 요소 = document.createElement(태그);
+      if (클래스) 요소.className = 클래스;
+      if (글자 !== undefined) 요소.textContent = 글자;
+      return 요소;
+    }
+
+    // 1) 가게 정보 채우기
+    document.title = 가게정보.이름 + " 메뉴판";
+    document.getElementById("가게이름").textContent = 가게정보.이름;
+    document.getElementById("한줄소개").textContent = 가게정보.한줄소개;
+    document.getElementById("영업시간").textContent = 가게정보.영업시간;
+    document.getElementById("전화버튼").href = "tel:" + 가게정보.전화걸기번호;
+    // 버튼 안에 '전화 걸기' 글자와, 그 아래 줄에 전화번호를 따로 보여줘요 (번호가 중간에 끊기지 않게)
+    var 전화버튼 = document.getElementById("전화버튼");
+    전화버튼.textContent = "📞 전화 걸기";
+    전화버튼.appendChild(만들기("span", "전화번호글자", 가게정보.전화번호));
+
+    // 2) 분류별로 메뉴 카드 만들기
+    var 메뉴영역 = document.getElementById("메뉴영역");
+    var 바로가기 = document.getElementById("바로가기");
+
+    var 묶음들 = [];   // 분류마다 하나씩 만든 메뉴 묶음 (보이기/숨기기에 써요)
+    var 버튼들 = [];
+
+    // 버튼을 누르면 해당 분류만 보여주는 도구. 이름이 "전체"면 모두 보여줘요.
+    function 분류보기(선택이름) {
+      묶음들.forEach(function (묶음) {
+        묶음.hidden = !(선택이름 === "전체" || 묶음.dataset.분류 === 선택이름);
+      });
+      버튼들.forEach(function (버튼) {
+        버튼.classList.toggle("선택됨", 버튼.dataset.분류 === 선택이름);
+      });
+    }
+
+    // 버튼 만들기: 맨 앞에 '전체' 버튼, 그 뒤로 분류마다 버튼 하나씩
+    ["전체"].concat(메뉴목록.map(function (분류) { return 분류.분류이름; }))
+      .forEach(function (이름) {
+        var 버튼 = 만들기("button", "", 이름);
+        버튼.type = "button";
+        버튼.dataset.분류 = 이름;
+        버튼.addEventListener("click", function () { 분류보기(이름); });
+        바로가기.appendChild(버튼);
+        버튼들.push(버튼);
+      });
+
+    메뉴목록.forEach(function (분류) {
+      // 이 분류의 메뉴를 담는 묶음
+      var 묶음 = 만들기("div", "분류묶음");
+      묶음.dataset.분류 = 분류.분류이름;
+      메뉴영역.appendChild(묶음);
+      묶음들.push(묶음);
+
+      // 분류 제목
+      묶음.appendChild(만들기("h2", "제목", 분류.분류이름));
+
+      // 메뉴 카드들
+      분류.메뉴.forEach(function (메뉴) {
+        var 카드 = 만들기("section", "카드 메뉴카드" + (메뉴.품절 ? " 품절" : "") + (메뉴.시그니처 ? " 시그니처" : ""));
+
+        // 시그니처 메뉴에는 카드 맨 위에 작은 배지를 달아요 (배지 글자는 여기서 고쳐요)
+        if (메뉴.시그니처) 카드.appendChild(만들기("div", "추천배지", "★ 사장님 추천"));
+
+        var 줄 = 만들기("div", "메뉴줄");
+        var 이름 = 만들기("span", "메뉴이름", 메뉴.이름);
+        if (메뉴.신메뉴) 이름.appendChild(만들기("span", "딱지", "신메뉴"));
+        if (메뉴.품절) 이름.appendChild(만들기("span", "딱지 품절딱지", "오늘 품절"));
+        줄.appendChild(이름);
+        줄.appendChild(만들기("span", "가격", 가격글자(메뉴.가격)));
+
+        카드.appendChild(줄);
+        카드.appendChild(만들기("p", "설명", 메뉴.설명));
+        묶음.appendChild(카드);
+      });
+    });
+
+    // 처음 들어오면 '전체'가 선택된 상태로 시작해요
+    분류보기("전체");
+  </script>
+</body>
+</html>
